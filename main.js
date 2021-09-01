@@ -38,6 +38,7 @@ function draw() {
   {
     pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
     if(tieneMinaCasillero(columnaPresionada, filaPresionada)){
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA);
       perder();
     }else{
       casillerosSinDescubrir--;
