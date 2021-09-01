@@ -26,16 +26,24 @@ function setup()
   COLOR_CASILLERO_CON_MINA = color("#FF0000");
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
+  casillerosSinDescubrir = COLUMNAS * FILAS;
 
   // Modificar/completar
 }
 
 
 function draw() {
+  ponerMinaCasillero(5,5);
   if (hizoClick == true)
   {
     pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-
+    if(tieneMinaCasillero(columnaPresionada, filaPresionada)){
+      perder();
+    }else{
+      casillerosSinDescubrir--;
+      descubrirCasillero(columnaPresionada, filaPresionada);
+      mostrarNumeroCasillero(columnaPresionada, filaPresionada, contarMinasAlrededor(columnaPresionada, filaPresionada));
+    }
 
     
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
@@ -45,7 +53,7 @@ function draw() {
 
 function ganoElJuego()
 {
-  return false;   //Esto hace que NUNCA gane el juego. Modificar/completar
+  return true;
 }
 
 function ponerMinasTablero()
@@ -60,5 +68,22 @@ function mostrarMinas()
 
 function contarMinasAlrededor(columna, fila)
 {
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+  var minas = 0;
+  if(tieneMinaCasillero(columna, fila + 1))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna + 1, fila + 1))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna , fila -1))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna - 1, fila -1))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna +1, fila))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna -1, fila + 1))
+    minas = minas + 1;
+  if(tieneMinaCasillero(columna +1, fila - 1))
+      minas = minas + 1;
+  if(tieneMinaCasillero(columna -1, fila))
+      minas = minas + 1;
+  return minas;
 }
